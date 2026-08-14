@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>🌳 Árbol de Causas — Siniestro #{{ resultado.siniestro.id }}</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div style="background:#f8f9fa;padding:16px;border-radius:6px">
+      <strong>Fecha:</strong> {{ resultado.siniestro.fecha }}<br>
+      <strong>Localidad:</strong> {{ resultado.siniestro.localidad }}<br>
+      <strong>Tipo:</strong> {{ resultado.siniestro.tipo_siniestro }}<br>
+      <strong>Gravedad:</strong> {{ resultado.siniestro.gravedad }}
+    </div>
+    {% if resultado.encuesta %}
+    <div style="background:#f8f9fa;padding:16px;border-radius:6px">
+      <strong>Estrés:</strong> {{ resultado.encuesta.nivel_estres }}/5<br>
+      <strong>Ira:</strong> {{ resultado.encuesta.nivel_ira }}/5<br>
+      <strong>Fatiga:</strong> {{ resultado.encuesta.nivel_fatiga }}/5<br>
+      <strong>Horas sueño:</strong> {{ resultado.encuesta.horas_sueno }}
+    </div>
+    {% endif %}
+  </div>
+
+  <div style="margin:30px 0">
+    {% for factor in resultado.cadena %}
+    <div style="display:flex;align-items:flex-start;margin-bottom:8px">
+      <div style="
+        {% if factor.nivel == 1 %}background:#e67e22;
+        {% elif factor.nivel == 2 %}background:#2E75B6;
+        {% else %}background:#1F4E79;{% endif %}
+        color:white;padding:14px 20px;border-radius:8px;flex:1;
+        margin-left:{{ (factor.nivel - 1) * 30 }}px">
+        <div style="font-size:12px;opacity:0.85;margin-bottom:4px">{{ factor.label }}</div>
+        <div style="font-weight:bold">{{ factor.descripcion }}</div>
+      </div>
+    </div>
+    {% if not loop.last %}
+    <div style="margin-left:{{ (factor.nivel - 1) * 30 + 20 }}px;font-size:20px;color:#1F4E79;margin-bottom:4px">↓</div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <div style="background:#E2EFDA;border-left:5px solid #375623;padding:16px;border-radius:4px">
+    <strong style="color:#375623">🔍 CAUSA RAÍZ IDENTIFICADA:</strong><br>
+    <span style="font-size:15px">{{ resultado.causa_raiz }}</span>
+  </div>
+
+  <div style="margin-top:20px">
+    <a href="/" class="btn btn-primary">← Volver al inicio</a>
+    <a href="/dashboard" class="btn btn-success" style="margin-left:10px">Ver dashboard</a>
+  </div>
+</div>
+{% endblock %}

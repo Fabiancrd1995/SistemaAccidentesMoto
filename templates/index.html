@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="stat-grid">
+  <div class="stat">
+    <div class="numero">{{ total }}</div>
+    <div class="label">Siniestros registrados</div>
+  </div>
+  <div class="stat" style="background:#c0392b">
+    <div class="numero">{{ fatales }}</div>
+    <div class="label">Casos fatales</div>
+  </div>
+  <div class="stat" style="background:#375623">
+    <div class="numero">{{ encuestas }}</div>
+    <div class="label">Encuestas emocionales</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Registros de Siniestros</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Fecha</th><th>Localidad</th><th>Tipo</th>
+        <th>Causa oficial</th><th>Gravedad</th><th>Estrés</th><th>Ira</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in siniestros %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.fecha }}</td>
+      <td>{{ s.localidad }}</td>
+      <td>{{ s.tipo_siniestro }}</td>
+      <td>{{ s.causa_oficial }}</td>
+      <td>
+        {% if s.gravedad == 'Fatal' %}<span class="badge badge-fatal">Fatal</span>
+        {% elif s.gravedad == 'Herido grave' %}<span class="badge badge-grave">Herido grave</span>
+        {% else %}<span class="badge badge-herido">Herido</span>{% endif %}
+      </td>
+      <td>{% if s.nivel_estres %}{{ s.nivel_estres }}/5{% else %}—{% endif %}</td>
+      <td>{% if s.nivel_ira %}{{ s.nivel_ira }}/5{% else %}—{% endif %}</td>
+      <td><a href="/arbol/{{ s.id }}" class="btn btn-primary">Ver árbol</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

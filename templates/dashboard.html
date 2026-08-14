@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>📊 Dashboard de Patrones de Accidentalidad</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>{{ graficos.localidad | safe }}</div>
+    <div>{{ graficos.causa | safe }}</div>
+    <div>{{ graficos.gravedad | safe }}</div>
+    <div>{{ graficos.franja | safe }}</div>
+  </div>
+  <div style="margin-top:20px">
+    <h3 style="color:#1F4E79;margin-bottom:12px">Perfil Emocional Promedio de Conductores</h3>
+    {{ graficos.emocional | safe }}
+  </div>
+  {% if promedios and promedios.estres %}
+  <div style="background:#EBF3FB;padding:16px;border-radius:6px;margin-top:16px">
+    <strong style="color:#1F4E79">Promedios emocionales registrados:</strong><br>
+    Estrés: {{ "%.1f"|format(promedios.estres) }}/5 &nbsp;|&nbsp;
+    Ira: {{ "%.1f"|format(promedios.ira) }}/5 &nbsp;|&nbsp;
+    Ansiedad: {{ "%.1f"|format(promedios.ansiedad) }}/5 &nbsp;|&nbsp;
+    Fatiga: {{ "%.1f"|format(promedios.fatiga) }}/5
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

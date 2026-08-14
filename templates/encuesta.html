@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <h2>📋 Encuesta de Estado Emocional del Conductor</h2>
+  <form method="POST" style="max-width:600px">
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Siniestro relacionado (opcional)</label>
+      <select name="siniestro_id" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px">
+        <option value="">— Sin siniestro asociado —</option>
+        {% for s in siniestros %}
+        <option value="{{ s.id }}">{{ s.id }} | {{ s.fecha }} | {{ s.localidad }} | {{ s.tipo_siniestro }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Tipo de reporte</label>
+      <select name="tipo_reporte" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px">
+        <option value="pre_conduccion">Antes de conducir</option>
+        <option value="post_accidente">Post accidente</option>
+      </select>
+    </div>
+    {% for campo, etiqueta in [('nivel_estres','Nivel de estrés'),('nivel_ira','Nivel de ira'),('nivel_ansiedad','Nivel de ansiedad'),('nivel_fatiga','Nivel de fatiga')] %}
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">{{ etiqueta }} (1=Bajo, 5=Muy alto)</label>
+      <input type="range" name="{{ campo }}" min="1" max="5" value="3" required
+             style="width:100%" oninput="this.nextElementSibling.textContent=this.value">
+      <span style="font-weight:bold;color:#1F4E79">3</span>
+    </div>
+    {% endfor %}
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Horas de sueño la noche anterior</label>
+      <input type="number" name="horas_sueno" min="0" max="12" step="0.5" value="6" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px">
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Horas de jornada laboral ese día</label>
+      <input type="number" name="horas_jornada" min="0" max="16" step="0.5" value="8" required style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px">
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Condición del tráfico</label>
+      <select name="condicion_trafico" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px">
+        <option value="fluido">Fluido</option>
+        <option value="moderado">Moderado</option>
+        <option value="congestionado">Congestionado</option>
+        <option value="muy_congestionado">Muy congestionado</option>
+      </select>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" name="situacion_personal_adversa"> ¿Tenía alguna situación personal adversa antes de conducir?
+      </label>
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="font-weight:bold;display:block;margin-bottom:6px">Descripción (si aplica)</label>
+      <textarea name="descripcion_situacion" rows="3" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;font-size:15px">Guardar encuesta</button>
+  </form>
+</div>
+{% endblock %}
