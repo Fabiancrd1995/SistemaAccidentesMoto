@@ -1,6 +1,9 @@
 import pandas as pd
 import mysql.connector
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================
 # CONFIGURACIÓN
@@ -8,7 +11,7 @@ from datetime import datetime
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': '95100805325F.',  # Contraseña de MySQL
+    'password': os.getenv('DB_PASSWORD', ''),
     'database': 'sistema_accidentes',
     'charset': 'utf8mb4'
 }

@@ -4,6 +4,9 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 import json
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -17,7 +20,7 @@ app = Flask(__name__)
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': '95100805325F.', # Contraseña de MySQL
+    'password': os.getenv('DB_PASSWORD', ''),
     'database': 'sistema_accidentes',
     'charset': 'utf8mb4'
 }

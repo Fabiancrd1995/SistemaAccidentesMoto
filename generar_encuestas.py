@@ -1,5 +1,8 @@
 import mysql.connector
 import random
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================
 # CONFIGURACIÓN
@@ -7,7 +10,7 @@ import random
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': '95100805325F.', # Contraseña de MySQL
+    'password': os.getenv('DB_PASSWORD', ''),
     'database': 'sistema_accidentes',
     'charset': 'utf8mb4'
 }

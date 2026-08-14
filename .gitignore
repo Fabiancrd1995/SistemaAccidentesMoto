@@ -1,0 +1,9 @@
+# Archivos a ignorar
+*.csv
+*.pdf
+__pycache__/
+*.pyc
+.env
+venv/
+*.log
+.env
